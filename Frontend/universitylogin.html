@@ -13,7 +13,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
             color: #333;
         }
 
@@ -52,7 +51,7 @@
         }
 
         .form-group input:focus {
-            border-color: #6a11cb;
+            border-color: #0a66c2;
             outline: none;
         }
 
@@ -63,7 +62,7 @@
         }
 
         .login-button {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            background-color: #0a66c2;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -72,19 +71,21 @@
             font-size: 16px;
             transition: background 0.3s;
             width: 100%;
+            margin-top: 20px;
         }
 
         .login-button:hover {
-            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            background-color: #0a66c2;
         }
 
         .forgot-password {
             margin-top: 10px;
             font-size: 14px;
+            
         }
 
         .forgot-password a {
-            color: #2575fc;
+            color: #0a66c2;
             text-decoration: none;
         }
 
@@ -92,27 +93,17 @@
             text-decoration: underline;
         }
 
-        .signup-link {
-            margin-top: 15px;
-            display: block;
-            font-size: 14px;
-            color: white;
+        #signup {
+        display: block;
+        margin-top: 20px;
+        font-size: 16px;
+        text-decoration: none;
+        color: #007bff;
         }
 
-        .signup-link a {
-            background: #2575fc;
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background 0.3s;
+        #signup:hover{
+            text-decoration: underline;
         }
-
-        .signup-link a:hover {
-            background: #6a11cb;
-        }
-
         @media (max-width: 480px) {
             .login-container {
                 padding: 15px;
@@ -122,15 +113,15 @@
                 font-size: 14px;
             }
 
-            .signup-link a {
+            #signup {
                 font-size: 14px;
             }
-        }
+        }   
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h1>University Login</h1>
+        <h1>Login</h1>
         <form id="loginForm">
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -142,14 +133,15 @@
                 <input type="password" id="password" placeholder="Enter your password" required>
                 <div id="passwordError" class="error-message"></div>
             </div>
-            <button type="submit" class="login-button">Login</button>
+
             <div class="forgot-password">
                 <a href="#">Forgot Password?</a>
             </div>
+
+            <button type="submit" class="login-button">Login</button>  
         </form>
-        <div class="signup-link">
-            <a href="university.signup.html">Sign Up</a>
-        </div>
+    
+        <a href="university.signup.html" id="signup">Sign Up</a>
     </div>
 
     <script>
@@ -158,9 +150,12 @@
         const emailError = document.getElementById('emailError');
         const passwordError = document.getElementById('passwordError');
 
+        const form = document.getElementById('loginForm');
+        const eduInRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.edu\.in$/;
+
         emailInput.addEventListener('input', () => {
-            if (!emailInput.validity.valid) {
-                emailError.textContent = 'Please enter a valid email address.';
+            if (!eduInRegex.test(emailInput.value)) {
+                emailError.textContent = 'Please use an email ending with .edu.in';
             } else {
                 emailError.textContent = '';
             }
@@ -174,8 +169,8 @@
             }
         });
 
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
 
             const email = emailInput.value;
             const password = passwordInput.value;
@@ -190,10 +185,9 @@
                 return;
             }
 
-            // Simulate a login process (replace this with actual server-side validation)
-            if (email === 'student@university.com' && password === 'password123') {
+            if (email === 'student@edu.in' && password === 'password123') {
                 alert('Login successful!');
-                window.location.href = 'dashboard.html'; // Redirect to the dashboard page
+                window.location.href = 'dashboard.html'; // Redirect to dashboard
             } else {
                 alert('Invalid email or password. Please try again.');
             }
